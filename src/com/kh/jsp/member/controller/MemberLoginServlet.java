@@ -27,7 +27,13 @@ public class MemberLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		
+		System.out.println("userId : "+userId);
+		System.out.println("userPwd : "+userPwd);
 	}
 
 	/**
