@@ -1,5 +1,8 @@
 package com.kh.jsp.member.model.service;
 
+
+import static com.kh.jsp.common.JDBCTemplate.getConnection;
+import static com.kh.jsp.common.JDBCTemplate.close;
 import java.sql.Connection;
 
 import com.kh.jsp.member.model.dao.MemberDao;

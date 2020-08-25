@@ -66,7 +66,7 @@
    <!-- login-area starts  -->
    <div class="login-area">
       <c:if test="${empty sessionScope.loginUser }">
-         <form id="loginForm" action="${applicationScope.contextPath }/login.me" method="post">
+         <form id="loginForm" action="${ applicationScope.contextPath }/login.me" method="post">
             <table>
                <tr>
                   <td><label class="text">ID :</label></td>

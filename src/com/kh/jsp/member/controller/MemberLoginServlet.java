@@ -33,7 +33,7 @@ public class MemberLoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		//request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
@@ -46,18 +46,25 @@ public class MemberLoginServlet extends HttpServlet {
 		requestMember.setUserPwd(userPwd);
 		
 		Member loginUser = new MemberService().loginCheck(requestMember);
-		System.out.println(loginUser);
+		
+		System.out.println("loginUser의 정체 : "+loginUser);
+		
 		String path="";
+		
 		if(loginUser!= null){
+			
+			path= "index.jsp";
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
 			
-			path= "index.jsp";
+			
 			response.sendRedirect(path);
 		}else {
+			path = "views/common/errorPage.jsp";
 			request.setAttribute("message","로그인 실패!");
 			
-			path = "views/common/errorPage.jsp";
+			
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
