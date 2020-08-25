@@ -12,12 +12,17 @@ public class Member implements java.io.Serializable{
 	private String address;
 	private String interest;
 	private Date enrollDate;
+	private Date modifyDate;
 	private String status;
 	
+
+
+
+
 	public Member(){}
 
 	public Member(int uno, String userId, String userPwd, String nickName, String phone, String email, String address,
-			String interest, Date enrollDate) {
+			String interest, Date enrollDate,Date modifyDate, String status) {
 		super();
 		this.uno = uno;
 		this.userId = userId;
@@ -28,6 +33,8 @@ public class Member implements java.io.Serializable{
 		this.address = address;
 		this.interest = interest;
 		this.enrollDate = enrollDate;
+		this.status=status;
+		this.modifyDate=modifyDate;
 	}
 
 	public int getUno() {
@@ -100,15 +107,31 @@ public class Member implements java.io.Serializable{
 
 	public void setEnrollDate(Date enrollDate) {
 		this.enrollDate = enrollDate;
+	}	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
 	}
 
 	@Override
 	public String toString() {
 		return "Member [uno=" + uno + ", userId=" + userId + ", userPwd=" + userPwd + ", nickName=" + nickName
 				+ ", phone=" + phone + ", email=" + email + ", address=" + address + ", interest=" + interest
-				+ ", enrollDate=" + enrollDate + "]";
+				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
-	
+
+
+
 	
 
 }

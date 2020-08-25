@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kh.jsp.member.model.service.MemberService;
+import com.kh.jsp.member.model.vo.Member;
 
 /**
  * Servlet implementation class MemberLoginServlet
@@ -36,6 +40,26 @@ public class MemberLoginServlet extends HttpServlet {
 		
 		System.out.println("userId : "+userId);
 		System.out.println("userPwd : "+userPwd);
+		
+		Member requestMember = new Member();
+		requestMember.setUserId(userId);
+		requestMember.setUserPwd(userPwd);
+		
+		Member loginUser = new MemberService().loginCheck(requestMember);
+		System.out.println(loginUser);
+		String path="";
+		if(loginUser!= null){
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUser", loginUser);
+			
+			path= "index.jsp";
+			response.sendRedirect(path);
+		}else {
+			request.setAttribute("message","로그인 실패!");
+			
+			path = "views/common/errorPage.jsp";
+			request.getRequestDispatcher(path).forward(request, response);
+		}
 	}
 
 	/**
