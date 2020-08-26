@@ -78,7 +78,7 @@
                </tr>
             </table>
             <div class="btns" align="center">
-               <div id="memberJoinBtn">회원가입</div>
+               <div id="memberJoinBtn" onclick="memberJoin();">회원가입</div>
                <div id="loginBtn" onclick="login();">로그인</div>
             </div>
          </form>
@@ -88,7 +88,7 @@
             <label><c:out value="${sessionScope.loginUser.nickName }"/>님의 방문을 환영합니다.</label>
             <div class="btn" align="right">
                <div id="changeInfo">정보수정</div>
-               <div id="logoutBtn">로그아웃</div>
+               <div id="logoutBtn" onclick="logout();">로그아웃</div>
             </div>
          </div>
       </c:if>
@@ -98,6 +98,7 @@
    <br clear="both">
    <br>
    
+  
    <!-- nav-area starts -->
       <div class="wrap">
          <div class="nav">
@@ -115,6 +116,24 @@
       }
    </script>
    
-   
+   <script>
+   	function logout(){
+   		var check = window.confirm("로그아웃을 하시겠습니까?");
+   		
+   		if(check){
+   			location.href="<%= request.getContextPath()%>/logout";
+   		}
+   		
+   	}
+   	
+   	function memberJoin(){
+   		var check = window.confirm("회원가입을 하시겠습니까?");
+   		
+   		if(check){
+   			
+   			location.href = "${applicationScope.contextPath}/views/member/memberJoinForm.jsp";
+   		}
+   	}
+   </script>
 </body>
 </html>
