@@ -60,6 +60,7 @@ public class MemberLoginServlet extends HttpServlet {
 			
 			
 			response.sendRedirect(path);
+			
 		}else {
 			path = "views/common/errorPage.jsp";
 			request.setAttribute("message","로그인 실패!");

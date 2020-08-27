@@ -23,13 +23,13 @@ public class MemberService {
 		return loginUser;
 	}
 
-	public int insertMember(Member requestMember) {
+	public int insertMember(Member newMember) {
 		
 		Connection con = getConnection();
 		
 		int result=0;
 		
-		result = new MemberDao().insertMember(con,requestMember);
+		result = new MemberDao().insertMember(con,newMember);
 		
 		if(result>0){
 			commit(con);
@@ -40,6 +40,46 @@ public class MemberService {
 		
 		
 		return result;
+	}
+
+	public Member updateMemberInformation(Member updateRequestMember) {
+		//커넥션 생성
+		Connection con = getConnection();
+		
+		//리턴할 변경된 정보를 저장할 memberType변수 선언
+		Member changedMemberInformation = null;
+		
+		//리턴
+		MemberDao md = new MemberDao();
+		
+		System.out.println("서비스 연결");
+		
+		int updateResult = md.updateMemberInformation(con,updateRequestMember);
+		
+		System.out.println("updateResult :"+updateResult);
+		
+		
+		if(updateResult>0){
+			//수정이 정상적으로 완료된 경우 변경된 회원 정보를 DB에서 다시 조회
+			changedMemberInformation = md.selectChangedMemberInformation(con,updateRequestMember);
+			System.out.println("수정 성공");
+			
+			if(changedMemberInformation !=null){
+				commit(con);
+			}else {
+				System.out.println("조회가 되지않음");
+				rollback(con);
+			}
+		}else {
+			//수정이 정상적으로 되지 않은 경우 rollback
+			System.out.println("수정이 안됨");
+			rollback(con);
+			
+			}	
+		
+		close(con);
+		
+		return changedMemberInformation;
 	}
 
 	

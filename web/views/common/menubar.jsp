@@ -87,7 +87,7 @@
          <div id="userInfo">
             <label><c:out value="${sessionScope.loginUser.nickName }"/>님의 방문을 환영합니다.</label>
             <div class="btn" align="right">
-               <div id="changeInfo">정보수정</div>
+               <div id="changeInfo" onclick="update();">정보수정</div>
                <div id="logoutBtn" onclick="logout();">로그아웃</div>
             </div>
          </div>
@@ -133,6 +133,15 @@
    			
    			location.href = "${applicationScope.contextPath}/views/member/memberJoinForm.jsp";
    		}
+   	}
+   	
+   	function update(){
+   		var check = window.confirm("내 정보 수정을 하시겠습니까?");
+   		
+   		if(check){
+   			location.href = "${applicationScope.contextPath}/views/member/memberUpdateForm.jsp";
+   		}
+   		
    	}
    </script>
 </body>

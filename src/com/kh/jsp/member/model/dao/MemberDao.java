@@ -91,17 +91,14 @@ public class MemberDao {
 			
 			pstmt = con.prepareStatement(query);
 			
-			pstmt.setInt(1, newMember.getUno());
-			pstmt.setString(2, newMember.getUserId());
-			pstmt.setString(3, newMember.getUserPwd());
-			pstmt.setString(4, newMember.getNickName());
-			pstmt.setString(5, newMember.getPhone());
-			pstmt.setString(6, newMember.getEmail());
-			pstmt.setString(7, newMember.getAddress());
-			pstmt.setString(8, newMember.getInterest());
-			pstmt.setDate(9, newMember.getEnrollDate());
-			pstmt.setDate(10, newMember.getModifyDate());
-			pstmt.setString(11, newMember.getStatus());
+	
+			pstmt.setString(1, newMember.getUserId());
+			pstmt.setString(2, newMember.getUserPwd());
+			pstmt.setString(3, newMember.getNickName());
+			pstmt.setString(4, newMember.getPhone());
+			pstmt.setString(5, newMember.getEmail());
+			pstmt.setString(6, newMember.getAddress());
+			pstmt.setString(7, newMember.getInterest());
 			
 			result = pstmt.executeUpdate();
 			
@@ -116,6 +113,82 @@ public class MemberDao {
 		}
 		
 		return result;
+	}
+
+	public int updateMemberInformation(Connection con, Member updateRequestMember) {
+	      PreparedStatement pstmt = null;
+	      int result = 0;
+	      System.out.println("업데이트 정보 연결");
+	      
+	      String query = prop.getProperty("updateMember");
+	      System.out.println(1);
+	      try {
+	         pstmt = con.prepareStatement(query);
+	        
+	         pstmt.setString(1, updateRequestMember.getNickName());
+	         pstmt.setString(2, updateRequestMember.getPhone());
+	         pstmt.setString(3, updateRequestMember.getEmail());
+	         pstmt.setString(4, updateRequestMember.getAddress());
+	         pstmt.setString(5, updateRequestMember.getInterest());
+	         pstmt.setString(6, updateRequestMember.getUserId());
+	         pstmt.setString(7, updateRequestMember.getUserPwd());
+	         System.out.println(2);
+	         
+	         result = pstmt.executeUpdate();
+	         
+	         System.out.println("result : "+result);
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	    	  close(pstmt);
+	      }
+	      return result;
+	}
+	
+	
+	public Member selectChangedMemberInformation(Connection con, Member updateRequestMember) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member changedMemberInformation = null;
+		System.out.println("SELECT 정보 ");
+		String query = prop.getProperty("selectChangedInfo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, updateRequestMember.getUserId());
+			pstmt.setString(2, updateRequestMember.getUserPwd());
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				changedMemberInformation = new Member();
+				
+				changedMemberInformation.setUno(rset.getInt("UNO"));
+				changedMemberInformation.setUserId(rset.getString("USER_ID"));
+				changedMemberInformation.setUserPwd(rset.getString("USER_PWD"));
+				changedMemberInformation.setNickName(rset.getString("NICK_NAME"));
+				changedMemberInformation.setPhone(rset.getString("PHONE"));
+				changedMemberInformation.setEmail(rset.getString("EMAIL"));
+				changedMemberInformation.setAddress(rset.getString("ADDRESS"));
+				changedMemberInformation.setInterest(rset.getString("INTEREST"));
+				changedMemberInformation.setEnrollDate(rset.getDate("ENROLL_DATE"));
+				changedMemberInformation.setModifyDate(rset.getDate("MODIFY_DATE"));
+				changedMemberInformation.setStatus(rset.getString("STATUS"));
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return changedMemberInformation;
 	}
 
 

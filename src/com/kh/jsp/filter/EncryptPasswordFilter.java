@@ -10,20 +10,24 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Servlet Filter implementation class CommonEncodingFilter
- */
-@WebFilter("/*")
-public class CommonEncodingFilter implements Filter {
+import com.kh.jsp.wrapper.LoginWrapper;
 
-	
+/**
+ * Servlet Filter implementation class EncryptPasswordFilter
+ */
+@WebFilter("*.me")
+public class EncryptPasswordFilter implements Filter {
+
     /**
      * Default constructor. 
      */
-    public CommonEncodingFilter() {
+    public EncryptPasswordFilter() {
         // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see Filter#destroy()
+	 */
 	public void destroy() {
 		// TODO Auto-generated method stub
 	}
@@ -34,18 +38,18 @@ public class CommonEncodingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
+		System.out.println("암호화 필터!");
 		
-		HttpServletRequest hr = (HttpServletRequest) request;
+		HttpServletRequest	hr = (HttpServletRequest) request;
 		
-		System.out.println("요청 방식 : "+hr.getMethod());
-		if(hr.getMethod().equalsIgnoreCase("POST")) {		
-		request.setCharacterEncoding("UTF-8");
-		System.out.println("인코딩 완료!");
+		//wrapper는 결국 request 
+		LoginWrapper lw = new  LoginWrapper(hr);
 		
-	}
 		
+		
+		//우리가 전달한 request는
 		// pass the request along the filter chain
-		chain.doFilter(request, response);
+		chain.doFilter(lw, response);
 	}
 
 	/**

@@ -43,19 +43,19 @@
    <jsp:include page="../common/menubar.jsp"/>
    <div class="outer">
       <br>
-      <h2 align="center">회원가입</h2>
+      <h2 align="center">정보수정</h2>
       
-      <form id="joinForm" action="${ applicationScope.contextPath }/insertMember.me" method="post">
+      <form id="joinForm" action="${ applicationScope.contextPath }/updateMember.me" method="post">
          
          <table align="center">
             <tr>
                <td width="200px">* 아이디 </td>
-               <td><input type="text" maxlength="13" name="userId" id="userId"></td>
+               <td><input type="text" maxlength="13" name="userId" id="userId" readonly value="${ sessionScope.loginUser.getUserId() }"></td>
                <td width="200px"><div id="idCheck">중복확인</div></td>
             </tr>
             <tr>
                <td>* 비밀번호</td>
-               <td><input type="password" maxlength="13" name="userPwd"></td>
+               <td><input type="password" maxlength="13" name="userPwd" ></td>
                <td></td>
             </tr>
             <tr>
@@ -65,7 +65,7 @@
             </tr>
             <tr>
                <td>* 닉네임</td>
-               <td><input type="text" maxlength="5" name="nickName"></td>
+               <td><input type="text" maxlength="5" name="nickName" value="${ sessionScope.loginUser.getNickName() }"></td>
                <td><label id="nnResult"></label></td>
             </tr>
             <tr>
@@ -75,11 +75,11 @@
                   <input type="text" maxlength="4" name="tel2" size="2">-
                   <input type="text" maxlength="4" name="tel3" size="2">
                </td>
-               <td><label id="nnResult"></label></td>
+               <td></td>
             </tr>
             <tr>
                <td>이메일 </td>
-               <td><input type="email" name="email"></td>
+               <td><input type="email" name="email" value="${ sessionScope.loginUser.getEmail() }"></td>
                <td></td>
             </tr>
             <tr>
@@ -119,7 +119,7 @@
          <br>
          <div class="btns" align="center">
             <div id="goMain" onclick="goMain()">메인으로</div>
-            <div id="joinBtn" onclick="insertMember();">가입하기</div>
+            <div id="joinBtn" onclick="updateMember();">수정하기</div>
          </div>
          
          </form>
@@ -130,9 +130,71 @@
             location.href = "${ applicationScope.contextPath }/index.jsp";
          }
          
-         function insertMember(){
+         function updateMember(){
             $("#joinForm").submit();
          }
+         
+         
+         //취미 체킹 받아옴
+         $(function(){
+            $("input[name=interest]").each(function(){
+               var arr = '${ sessionScope.loginUser.getInterest() }'.split(", ");
+               console.log("interest arr :" + arr);
+               
+               for(var i = 0; i < arr.length; i++){
+                  if($(this).val() === arr[i]){
+                     $(this).attr("checked", true);
+                  }
+               }
+               
+               
+            });
+         });
+         
+         //번호 받아와서 value 값 설정
+         $(function(){
+            /* $("input[name=tel$]").each(function(){
+               var arr = '${ sessionScope.loginUser.getPhone() }'.split("-");
+               console.log("번호 arr : " + arr);
+               
+               for(var i = 0; i < arr.length; i++){
+                  
+                  $(this).val(arr[i]);
+               }
+               
+            }); */
+            
+            var arr = '${ sessionScope.loginUser.getPhone() }'.split("-");
+         console.log("번호 arr : " + arr);
+         
+            for(var i = 1 ; i <= arr.length ; i++ ){
+               $("input[name=tel"+ i +"]").each(function(){
+                  $(this).val(arr[i-1]);
+               });
+            }
+            
+         });
+         
+         //주소 받아와서 value 설정
+         $(function(){
+            var arr = '${ sessionScope.loginUser.getAddress() }'.split("$");
+            /* var arr = '${ sessionScope.loginUser.address }'.split("$"); 밑에거 아래거 둘다 됨 */
+            
+            console.log("address arr : " + arr)
+            
+            $("input[name=zipCode]").val(arr[0]);
+            
+            for(var i = 1 ; i<= arr.length -1 ; i++) {
+               
+            $("input[name=address" + i +"]").each(function(){
+                  
+               $(this).val(arr[i]);
+                  
+            });
+               
+            }
+         });
+         
    </script>
 </body>
 </html>
