@@ -12,6 +12,7 @@ import java.util.Properties;
 
 
 import com.kh.jsp.member.model.vo.Member;
+import com.kh.jsp.notice.model.vo.Notice;
 
 public class MemberDao {
 	
@@ -190,6 +191,8 @@ public class MemberDao {
 		
 		return changedMemberInformation;
 	}
+
+
 
 
 }

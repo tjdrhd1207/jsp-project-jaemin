@@ -103,9 +103,9 @@
       <div class="wrap">
          <div class="nav">
             <div class="menu">HOME</div>
-            <div class="menu">공지사항</div>
-            <div class="menu">게시판</div>
-            <div class="menu">사진게시판</div>
+            <div class="menu" onclick="goNotice();">공지사항</div>
+            <div class="menu" onclick="goBoard();">게시판</div>
+            <div class="menu" onclick="goThumbnail();">사진게시판</div>
          </div>
       </div>
    <!-- nav-area ends -->
@@ -142,6 +142,21 @@
    			location.href = "${applicationScope.contextPath}/views/member/memberUpdateForm.jsp";
    		}
    		
+   	}
+   	
+   	function goNotice(){
+   		
+   		location.href = "${ applicationScope.contextPath}/selectList.no";
+   	}
+   	function goBoard(){
+   	
+   		location.href = "${ applicationScope.contextPath }/selectList.bo";
+   		
+   	}
+
+   	
+   	function goThumbnail(){
+   		location.href="${applicationScope.contextPath}/selectList.tn";
    	}
    </script>
 </body>
